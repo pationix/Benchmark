@@ -7,19 +7,28 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="604.518" Width="726.807">
     <Grid Background="#FF849DC1">
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" Margin="10,290,433,26"  />
         <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="236" Margin="27,21,0,0" Height="32"/>
         <Button Content="Odśwież listę" HorizontalAlignment="Left" Height="32" Margin="283,21,0,0" VerticalAlignment="Top" Width="76" />
         <GroupBox Header="Parametry" HorizontalAlignment="Left" Height="208" Margin="27,58,0,0" VerticalAlignment="Top" Width="332"/>
-        <Button Content="Zacznij test" HorizontalAlignment="Left" Height="42" Margin="468,25,0,0" VerticalAlignment="Top" Width="160" FontSize="18"/>
-        <Label Content="Średnia" HorizontalAlignment="Left" Height="29" Margin="397,122,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
-        <TextBox x:Name="Srednia" HorizontalAlignment="Left" Height="28" Margin="503,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" TextChanged="TextBox_TextChanged" FontSize="16" IsReadOnly="True"/>
-        <TextBox x:Name="Szybkosc" HorizontalAlignment="Left" Height="28" Margin="503,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" TextChanged="TextBox_TextChanged" FontSize="16" IsReadOnly="True"/>
-        <TextBox x:Name="Max" HorizontalAlignment="Left" Height="28" Margin="503,170,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" TextChanged="TextBox_TextChanged" FontSize="16" IsReadOnly="True"/>
-        <TextBox x:Name="Min" HorizontalAlignment="Left" Height="28" Margin="503,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" TextChanged="TextBox_TextChanged" FontSize="16" IsReadOnly="True"/>
-        <Label Content="Szybkość" HorizontalAlignment="Left" Height="29" Margin="397,80,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
-        <Label Content="Najwyższa &#xD;&#xA;wartość" HorizontalAlignment="Left" Height="50
-" Margin="397,155,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
-        <Label Content="Najwyższa &#xA;wartość" HorizontalAlignment="Left" Height="50 " Margin="397,205,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
+        <Button Content="Zacznij test" HorizontalAlignment="Left" Height="42" Margin="457,25,0,0" VerticalAlignment="Top" Width="160" FontSize="18"/>
+        <Label Content="Średnia" HorizontalAlignment="Left" Height="29" Margin="402,161,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
+        <TextBox x:Name="Srednia" HorizontalAlignment="Left" Height="28" Margin="508,164,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
+        <TextBox x:Name="Szybkosc" HorizontalAlignment="Left" Height="28" Margin="508,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
+        <TextBox x:Name="Max" HorizontalAlignment="Left" Height="28" Margin="508,209,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
+        <TextBox x:Name="Min" HorizontalAlignment="Left" Height="28" Margin="508,254,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
+        <Label Content="Szybkość" HorizontalAlignment="Left" Height="29" Margin="402,119,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
+        <Label Content="Najwyższa &#xA;wartość" HorizontalAlignment="Left" Height="50
+" Margin="402,194,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
+        <Label Content="Najwyższa &#xA;wartość" HorizontalAlignment="Left" Height="50 " Margin="402,244,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
+        <Label Content="Czas:  00:00" HorizontalAlignment="Left" Height="47" Margin="468,0,0,455" VerticalAlignment="Bottom" Width="137" FontSize="22"/>
+
+        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="0,299,140,0" >
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Szybkość"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Czas" Labels="{Binding Labels}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
     </Grid>
 </Window>

@@ -13,9 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LiveCharts;
-using LiveCharts.Configurations;
-using LiveCharts.Definitions.Charts;
-using LiveCharts.Definitions.Series;
+using LiveCharts.Wpf;
 
 namespace Benchmark
 {
@@ -28,40 +26,20 @@ namespace Benchmark
         {
             InitializeComponent();
 
-            var doubleValues = new ChartValues<double> { 1 };
-            var intValues = new ChartValues<int> { 1};
-
-            //the observable value class is really helpful, it notifies the chart to update
-            //every time the ObservableValue.Value property changes
-            var observableValues = new ChartValues<LiveCharts.Defaults.ObservableValue>
-            {
-                new LiveCharts.Defaults.ObservableValue(1), //initializes Value property as 1
-
-            };
-            var myValues = new LiveCharts.ChartValues<double>
-            {
-              10, //index 0
-              6,  //index 1
-              9,  //index 2
-              2,  //index 3
-              7   //index 4
-            };
+            //serie danych
             SeriesCollection = new SeriesCollection
             {
-                new LiveCharts.Wpf.LineSeries
+                new LineSeries
                 {
-                    Values = new ChartValues<double> { 3, 5, 7, 4, 5 }
+                    Title = "",
+                    Values = new ChartValues<double> { 6, 7, 3, 4 ,6 },
+                    PointGeometry = null
                 }
             };
+            
+            DataContext = this;
         }
+        public SeriesCollection SeriesCollection { get; set; }
 
-        public SeriesCollection SeriesCollection { get; }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
-    
-
 }
