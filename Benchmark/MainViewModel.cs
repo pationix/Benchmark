@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Data.Entity;
 
 namespace Benchmark
 {
@@ -89,6 +90,7 @@ namespace Benchmark
                     Values = new ChartValues<ObservableValue>()
                 }
             };
+
         }
 
         private void Commands()
@@ -187,6 +189,17 @@ namespace Benchmark
                 if (backgroundWorker.IsBusy)
                     backgroundWorker.CancelAsync();
                 SetResults();
+
+
+                Device device = Devices.FirstOrDefault(x => x.DeviceId == selectedDevice);
+                if (device == null)
+                    return;
+                using (ApplicationDbContext context = new ApplicationDbContext("db.db3"))
+                {
+                    context.SpeedTestResultHeaders.Add(new SpeedTestResultHeader { DeviceName = device.Name, MinSpeed = Results.Min(), MaxSpeed = Results.Max(), AvgSpeed = Results.Average(), Results = Results.Select(x => new SpeedTestResult { Value = x }).ToList() });
+                    context.SaveChanges();
+                }
+
             }
             catch (Exception e)
             {
@@ -298,7 +311,7 @@ namespace Benchmark
                 if (string.IsNullOrEmpty(selectedDevice) || Devices.Any(x => x.DeviceId == selectedDevice) == false)
                     SelectedDevice = Devices.FirstOrDefault()?.DeviceId;
                 else
-                    SelectedDevice = Devices.FirstOrDefault(x=>x.DeviceId == selectedDevice)?.DeviceId;
+                    SelectedDevice = Devices.FirstOrDefault(x => x.DeviceId == selectedDevice)?.DeviceId;
                 //DriveInfo[] driveInfos = DriveInfo.GetDrives();
             }
             catch (Exception e)
