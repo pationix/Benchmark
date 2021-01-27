@@ -6,29 +6,84 @@
         xmlns:local="clr-namespace:Benchmark" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="604.518" Width="726.807">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
     <Grid Background="#FF849DC1">
-        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="236" Margin="27,21,0,0" Height="32"/>
-        <Button Content="Odśwież listę" HorizontalAlignment="Left" Height="32" Margin="283,21,0,0" VerticalAlignment="Top" Width="76" />
-        <GroupBox Header="Parametry" HorizontalAlignment="Left" Height="208" Margin="27,58,0,0" VerticalAlignment="Top" Width="332"/>
-        <Button Content="Zacznij test" HorizontalAlignment="Left" Height="42" Margin="457,25,0,0" VerticalAlignment="Top" Width="160" FontSize="18"/>
-        <Label Content="Średnia" HorizontalAlignment="Left" Height="29" Margin="402,161,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
-        <TextBox x:Name="Srednia" HorizontalAlignment="Left" Height="28" Margin="508,164,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
-        <TextBox x:Name="Szybkosc" HorizontalAlignment="Left" Height="28" Margin="508,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
-        <TextBox x:Name="Max" HorizontalAlignment="Left" Height="28" Margin="508,209,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
-        <TextBox x:Name="Min" HorizontalAlignment="Left" Height="28" Margin="508,254,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
-        <Label Content="Szybkość" HorizontalAlignment="Left" Height="29" Margin="402,119,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
-        <Label Content="Najwyższa &#xA;wartość" HorizontalAlignment="Left" Height="50
-" Margin="402,194,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
-        <Label Content="Najwyższa &#xA;wartość" HorizontalAlignment="Left" Height="50 " Margin="402,244,0,0" VerticalAlignment="Top" Width="88" FontSize="16"/>
-        <Label Content="Czas:  00:00" HorizontalAlignment="Left" Height="47" Margin="468,0,0,455" VerticalAlignment="Bottom" Width="137" FontSize="22"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
+                      IsEnabled="{Binding IsEnabled}" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Devices}" DisplayMemberPath="Name" 
+                      SelectedValuePath="DeviceId" SelectedValue="{Binding SelectedDevice}"
+                      Width="236"  Height="32"/>
+            <Button Content="Odśwież listę" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshCommand}" Margin="20,20,0,0"  Height="32"  VerticalAlignment="Top" Width="76" />
 
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="0,299,140,0" >
+        </StackPanel>
+        <GroupBox Grid.Row="1" Grid.Column="0"  Header="Parametry" Height="208" Margin="20" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+
+        <Grid  Grid.Row="0" Grid.RowSpan="5" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="{Binding BtnText, Mode=OneWay}" Command="{Binding StartCommand}"  Height="42"  Margin="0,50,20,0" Width="160" FontSize="18"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Label Content="Czas:" HorizontalAlignment="Left" Height="47"  VerticalAlignment="Bottom" Width="auto" FontSize="22"/>
+                <Label Content="{Binding TimeSpan}" HorizontalAlignment="Left" Height="47"  VerticalAlignment="Bottom" Width="auto" FontSize="22"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal"  Margin="0,0,20,20">
+                <Label  Content="Średnia" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="88" FontSize="16"/>
+                <TextBox x:Name="Srednia" HorizontalAlignment="Left" Height="28"  TextWrapping="Wrap" Text="{Binding Avg}" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
+
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,20,20">
+                <Label  Content="Szybkość" HorizontalAlignment="Left" Height="29"  VerticalAlignment="Top" Width="88" FontSize="16"/>
+                <TextBox   x:Name="Szybkosc" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" Text="{Binding ActualSpeed}"  VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
+            </StackPanel>
+            <StackPanel Grid.Row="4" Orientation="Horizontal"  Margin="0,0,20,0">
+                <Label  Content="Najwyższa &#xA;wartość" HorizontalAlignment="Left" Height="50"  VerticalAlignment="Top" Width="88" FontSize="16"/>
+                <TextBox  x:Name="Max" HorizontalAlignment="Left" Height="28"  TextWrapping="Wrap" Text="{Binding Max}" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
+
+            </StackPanel>
+            <StackPanel Grid.Row="5" Orientation="Horizontal"  Margin="0,0,20,20">
+                <Label   Content="Najniższa &#xA;wartość" HorizontalAlignment="Left" Height="50 "  VerticalAlignment="Top" Width="88" FontSize="16"/>
+                <TextBox  x:Name="Min" HorizontalAlignment="Left" Height="28"  TextWrapping="Wrap" Text="{Binding Min}" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
+              
+            </StackPanel>
+           
+        </Grid>
+  <lvc:CartesianChart LegendLocation="Right" Grid.Row="3" Series="{Binding SeriesCollection}" Hoverable="False" DataTooltip="{x:Null}">
+            <lvc:CartesianChart.AxisX>
+                <!--a small visual improvement, lets hide the first points (x = 0, x=1) to get better animations-->
+                <lvc:Axis Title="Czas" MinValue="0" MaxValue="30" ></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Szybkość"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
-            <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Czas" Labels="{Binding Labels}"></lvc:Axis>
-            </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
+        <!--<lvc:CartesianChart  LegendLocation="Right" Margin="0,299,140,0" >
+            <lvc:CartesianChart.Series>
+                <lvc:LineSeries Values="{Binding Results}" Title="Pomiar 1">
+                     
+                </lvc:LineSeries>
+            </lvc:CartesianChart.Series>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Czas" ></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>-->
     </Grid>
 </Window>
