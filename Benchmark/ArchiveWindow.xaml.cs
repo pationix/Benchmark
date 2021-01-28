@@ -31,7 +31,7 @@ namespace Benchmark
             InitializeComponent();
 
             ZoomingMode = ZoomingOptions.X;
-            XFormatter = val => new DateTime((long)val).ToString("dd MMM");
+            XFormatter = val => new DateTime((long)val).ToString("hh:mm:ss");
             YFormatter = val => val.ToString("C");
 
             DataContext = this;
