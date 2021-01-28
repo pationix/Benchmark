@@ -11,5 +11,17 @@ namespace Benchmark
         {
             InitializeComponent();
         }
+
+        private void OpenArchive(object sender, RoutedEventArgs e)
+        {
+            ArchiveWindow archiveWindow = new ArchiveWindow();
+            archiveWindow.ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ComparisonWindow comparisonWindow = new ComparisonWindow();
+            comparisonWindow.ShowDialog();
+        }
     }
 }

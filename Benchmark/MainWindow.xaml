@@ -9,7 +9,7 @@
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
-    <Grid Background="#FF849DC1">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -62,9 +62,10 @@
             <StackPanel Grid.Row="5" Orientation="Horizontal"  Margin="0,0,20,20">
                 <Label   Content="Najniższa &#xA;wartość" HorizontalAlignment="Left" Height="50 "  VerticalAlignment="Top" Width="88" FontSize="16"/>
                 <TextBox  x:Name="Min" HorizontalAlignment="Left" Height="28"  TextWrapping="Wrap" Text="{Binding Min}" VerticalAlignment="Top" Width="164"  FontSize="16" IsReadOnly="True"/>
-              
             </StackPanel>
-           
+            <Button  Margin="26,81,20,-81" Grid.Row="5" Content="Archiwum" FontSize="22" Click="OpenArchive"></Button>
+            <Button  Margin="26,174,19,-174" Grid.Row="5" Content="Porównanie" FontSize="22" Click="Button_Click" />
+
         </Grid>
   <lvc:CartesianChart LegendLocation="Right" Grid.Row="3" Series="{Binding SeriesCollection}" Hoverable="False" DataTooltip="{x:Null}">
             <lvc:CartesianChart.AxisX>

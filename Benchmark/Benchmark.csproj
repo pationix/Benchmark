@@ -83,12 +83,26 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="ArchiveWindow.xaml.cs">
+      <DependentUpon>ArchiveWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ComparisonWindow.xaml.cs">
+      <DependentUpon>ComparisonWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Device.cs" />
     <Compile Include="ProgressModel.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="RunerModel.cs" />
     <Compile Include="SpeedTestResult.cs" />
     <Compile Include="SpeedTestService.cs" />
+    <Page Include="ArchiveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ComparisonWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
