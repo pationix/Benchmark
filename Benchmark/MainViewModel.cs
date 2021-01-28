@@ -202,7 +202,7 @@ namespace Benchmark
                     return;
                 using (ApplicationDbContext context = new ApplicationDbContext())
                 {
-                    context.SpeedTestResultHeaders.Add(new SpeedTestResultHeader { DeviceName = device.Name, Date = DateTime.Now.ToString("yyyyMMdd"), MinSpeed = Results.Min(), MaxSpeed = Results.Max(), AvgSpeed = Results.Average(), Results = Results.Select(x => new SpeedTestResult { Value = x }).ToList() });
+                    context.SpeedTestResultHeaders.Add(new SpeedTestResultHeader { DeviceName = device.Name, Date = DateTime.Now, DateString = DateTime.Now.ToString("yyyyMMdd"), MinSpeed = Results.Min(), MaxSpeed = Results.Max(), AvgSpeed = Results.Average(), Results = Results.Select(x => new SpeedTestResult { Value = x }).ToList() });
                     context.SaveChanges();
                 }
 

@@ -5,33 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Benchmark"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-        mc:Ignorable="d"
+        xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"
         Title="Archiwum" Height="450" Width="548.052">
 
-    <Grid>
-        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
-                      IsEnabled="{Binding IsEnabled}" 
-                      VerticalContentAlignment="Center" 
-                      ItemsSource="{Binding Devices}" DisplayMemberPath="Name" 
-                      SelectedValuePath="DeviceId" SelectedValue="{Binding SelectedDevice}"
-                      Width="266"  Height="32"/>
-        <Button Content="Odśwież listę" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshCommand}" Margin="302,20,162,0"  Height="32"  VerticalAlignment="Top" Width="76" />
-        <lvc:CartesianChart LegendLocation="Right"  Zoom="{Binding ZoomingMode}" Hoverable="False" Margin="10,83,10,75">
-            <lvc:CartesianChart.Series>
-                <lvc:ScatterSeries Title="Dysk" Values="{Binding Values}" />
-            </lvc:CartesianChart.Series>
-            <lvc:CartesianChart.AxisX>
-                <!--a small visual improvement, lets hide the first points (x = 0, x=1) to get better animations-->
-                <lvc:Axis Title="Godzina"></lvc:Axis>
-            </lvc:CartesianChart.AxisX>
-            <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Szybkość" LabelFormatter="{Binding Formatter}"></lvc:Axis>
-            </lvc:CartesianChart.AxisY>
-        </lvc:CartesianChart>
-        <Button Content="Zamknij" HorizontalAlignment="left" Height="47" Margin="197,362,0,0" VerticalAlignment="Top" Width="140" />
-        <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="435,20,0,0" Height="32" Width="95" SelectedDateFormat="Short" FirstDayOfWeek="Monday" SelectedDate="{x:Static sys:DateTime.Now}"/>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="20" Grid.Row="0" Orientation="Horizontal">            
+            <ComboBox HorizontalAlignment="Left"  Margin="20,0,0,0"
+            IsEnabled="{Binding IsEnabled}" 
+            VerticalContentAlignment="Center" 
+            ItemsSource="{Binding Devices}" DisplayMemberPath="Name" 
+            SelectedValuePath="Name" SelectedValue="{Binding SelectedDevice}"
+            Width="236"  Height="32"/>
+            <DatePicker   Height="32" Width="95"  Margin="20,0,0,0" SelectedDateFormat="Short" FirstDayOfWeek="Monday" SelectedDate="{Binding Date}"/>
+        </StackPanel>
 
+        <Wpf:CartesianChart Margin="20,0,20,0" Grid.Row="1" LegendLocation="Right" Series="{Binding SeriesCollection}" Hoverable="False" >
+            <Wpf:CartesianChart.AxisX>
+                <!--a small visual improvement, lets hide the first points (x = 0, x=1) to get better animations-->
+                <Wpf:Axis Title="Godzina" Labels="{Binding Labels}"/>
+            </Wpf:CartesianChart.AxisX>
+            <Wpf:CartesianChart.AxisY>
+                <Wpf:Axis Title=" Średnia szybkość" LabelFormatter="{Binding Formatter}"/>
+            </Wpf:CartesianChart.AxisY>
+        </Wpf:CartesianChart>
+        <Button Content="Zamknij" Click="Button_Click" HorizontalAlignment="Center" Height="47" Grid.Row="2" Margin="20" VerticalAlignment="Center" Width="140" />
 
 
     </Grid>

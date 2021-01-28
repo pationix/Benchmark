@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Benchmark"
         xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Benchmark.ComparisonWindow"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"
         Title="Porównanie" Height="450" MinWidth="700" Width="700">
     <Grid >
         <Grid.RowDefinitions>
