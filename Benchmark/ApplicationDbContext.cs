@@ -12,7 +12,8 @@ namespace Benchmark
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(string path) : base(DbServices.PrepareConnectionString(path), true)
+        private static string path = "db2.db3";
+        public ApplicationDbContext() : base(DbServices.PrepareConnectionString(path), true)
         {
         }
 

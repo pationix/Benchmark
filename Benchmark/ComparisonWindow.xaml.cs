@@ -24,23 +24,12 @@ namespace Benchmark
         public ComparisonWindow()
         {
             InitializeComponent();
-            SeriesCollection = new SeriesCollection
-            {
-                new ColumnSeries
-                {
-                    Title = "28.01.2021",
-                    Values = new ChartValues<double> { 39, 50,  }
-                }
-            };
-
-            Labels = new[] { "H", "C" };
-            Formatter = value => value.ToString("N");
-
-            DataContext = this;
+            DataContext = new ComparisonViewModel();
         }
-      
-        public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
-        private SeriesCollection SeriesCollection { get; set; }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

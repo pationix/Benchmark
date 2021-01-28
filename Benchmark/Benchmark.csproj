@@ -86,6 +86,7 @@
     <Compile Include="ArchiveWindow.xaml.cs">
       <DependentUpon>ArchiveWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ComparisonViewModel.cs" />
     <Compile Include="ComparisonWindow.xaml.cs">
       <DependentUpon>ComparisonWindow.xaml</DependentUpon>
     </Compile>

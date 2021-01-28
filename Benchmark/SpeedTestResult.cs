@@ -14,6 +14,7 @@ namespace Benchmark
         public double AvgSpeed { get; set; }
         public double MaxSpeed { get; set; }
         public double MinSpeed { get; set; }
+        public string Date { get; set; }
     }
 
     public class SpeedTestResult

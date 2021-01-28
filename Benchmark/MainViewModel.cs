@@ -145,6 +145,13 @@ namespace Benchmark
                 IsBusy = true;
                 Results.Clear();
                 SeriesCollection[0].Values.Clear();
+                string disk = Devices.FirstOrDefault(x => x.DeviceId == selectedDevice)?.Name ?? "Dysk 1";
+                SeriesCollection[0] = 
+                new LineSeries
+                {
+                    Title = disk,
+                    Values = new ChartValues<ObservableValue>()
+                };
                 SetResults();
                 backgroundWorker = new BackgroundWorker();
                 RunerModel model = new RunerModel(65536, driveInfo);
@@ -194,9 +201,9 @@ namespace Benchmark
                 Device device = Devices.FirstOrDefault(x => x.DeviceId == selectedDevice);
                 if (device == null)
                     return;
-                using (ApplicationDbContext context = new ApplicationDbContext("db.db3"))
+                using (ApplicationDbContext context = new ApplicationDbContext())
                 {
-                    context.SpeedTestResultHeaders.Add(new SpeedTestResultHeader { DeviceName = device.Name, MinSpeed = Results.Min(), MaxSpeed = Results.Max(), AvgSpeed = Results.Average(), Results = Results.Select(x => new SpeedTestResult { Value = x }).ToList() });
+                    context.SpeedTestResultHeaders.Add(new SpeedTestResultHeader { DeviceName = device.Name, Date = DateTime.Now.ToString("yyyyMMdd"), MinSpeed = Results.Min(), MaxSpeed = Results.Max(), AvgSpeed = Results.Average(), Results = Results.Select(x => new SpeedTestResult { Value = x }).ToList() });
                     context.SaveChanges();
                 }
 

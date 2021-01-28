@@ -30,7 +30,7 @@ namespace Benchmark
             string s = Path.GetPathRoot(Environment.SystemDirectory);
             if (s == runerModel.DriveInfo.RootDirectory.FullName)
             {
-                path = Path.GetTempFileName();
+                path = Path.Combine(Path.GetTempPath(), "SpeedTestBenchmark" + DateTime.Now.Ticks + ".dat");
             }
             while (!backgroundWorker.CancellationPending)
                 ServiceRun(path);
