@@ -25,20 +25,19 @@ namespace Benchmark
 
         private void MainLoop()
         {
+            while (!backgroundWorker.CancellationPending)
+                ServiceRun();
+            Console.WriteLine("SpeedTestService is Cancelled.");
+        }
 
+        private void ServiceRun()
+        {
             string path = Path.Combine(runerModel.DriveInfo.RootDirectory.FullName, "SpeedTestBenchmark" + DateTime.Now.Ticks + ".dat");
             string s = Path.GetPathRoot(Environment.SystemDirectory);
             if (s == runerModel.DriveInfo.RootDirectory.FullName)
             {
                 path = Path.Combine(Path.GetTempPath(), "SpeedTestBenchmark" + DateTime.Now.Ticks + ".dat");
             }
-            while (!backgroundWorker.CancellationPending)
-                ServiceRun(path);
-            Console.WriteLine("SpeedTestService is Cancelled.");
-        }
-
-        private void ServiceRun(string path)
-        {
             byte[] data = new byte[1024];
             
 
@@ -59,8 +58,14 @@ namespace Benchmark
 
                 bytesPerSecond = ((data.Length * 1024) / watch.Elapsed.TotalSeconds);
             }
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception ex)
+            {
 
-            File.Delete(path);
+            }
             backgroundWorker.ReportProgress(0, new ProgressModel(bytesPerSecond));
             Thread.Sleep(1000);
         }

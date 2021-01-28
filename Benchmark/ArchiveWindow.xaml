@@ -7,7 +7,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="ArchiveWindow" Height="450" Width="548.052">
+        Title="Archiwum" Height="450" Width="548.052">
 
     <Grid>
         <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
