@@ -144,14 +144,13 @@ namespace Benchmark
 
                 IsBusy = true;
                 Results.Clear();
-                SeriesCollection[0].Values.Clear();
                 string disk = Devices.FirstOrDefault(x => x.DeviceId == selectedDevice)?.Name ?? "Dysk 1";
-                SeriesCollection[0] = 
-                new LineSeries
+                SeriesCollection.Clear();
+                SeriesCollection.Add(new LineSeries
                 {
                     Title = disk,
                     Values = new ChartValues<ObservableValue>()
-                };
+                });
                 SetResults();
                 backgroundWorker = new BackgroundWorker();
                 RunerModel model = new RunerModel(65536, driveInfo);
