@@ -8,28 +8,30 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="ArchiveWindow" Height="450" Width="548.052">
-    
+
     <Grid>
         <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
                       IsEnabled="{Binding IsEnabled}" 
                       VerticalContentAlignment="Center" 
                       ItemsSource="{Binding Devices}" DisplayMemberPath="Name" 
                       SelectedValuePath="DeviceId" SelectedValue="{Binding SelectedDevice}"
-                      Width="236"  Height="32"/>
-        <Button Content="Dodaj" IsEnabled="{Binding IsEnabled}"  Margin="261,20,203,367" Width="76" />
-        <Button Content="Usuń" IsEnabled="{Binding IsEnabled}"  Margin="342,20,122,367" Width="76"  />
-        <lvc:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollection}" Zoom="{Binding ZoomingMode}" Hoverable="False" Margin="10,83,10,75">
+                      Width="266"  Height="32"/>
+        <Button Content="Odśwież listę" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshCommand}" Margin="302,20,162,0"  Height="32"  VerticalAlignment="Top" Width="76" />
+        <lvc:CartesianChart LegendLocation="Right"  Zoom="{Binding ZoomingMode}" Hoverable="False" Margin="10,83,10,75">
+            <lvc:CartesianChart.Series>
+                <lvc:ScatterSeries Title="Dysk" Values="{Binding Values}" />
+            </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
                 <!--a small visual improvement, lets hide the first points (x = 0, x=1) to get better animations-->
-                <lvc:Axis Title="Godzina" MinValue="0" MaxValue="30" ></lvc:Axis>
+                <lvc:Axis Title="Godzina"></lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Szybkość"></lvc:Axis>
+                <lvc:Axis Title="Szybkość" LabelFormatter="{Binding Formatter}"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
         <Button Content="Zamknij" HorizontalAlignment="left" Height="47" Margin="197,362,0,0" VerticalAlignment="Top" Width="140" />
-        <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="423,20,0,0" Height="32" Width="95" SelectedDateFormat="Short" FirstDayOfWeek="Monday" SelectedDate="{x:Static sys:DateTime.Now}"/>
-        
+        <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="435,20,0,0" Height="32" Width="95" SelectedDateFormat="Short" FirstDayOfWeek="Monday" SelectedDate="{x:Static sys:DateTime.Now}"/>
+
 
 
     </Grid>

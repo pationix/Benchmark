@@ -29,7 +29,7 @@ namespace Benchmark
                 new ColumnSeries
                 {
                     Title = "28.01.2021",
-                    Values = new ChartValues<double> { 39, 50,  }
+                    Values = new ChartValues<double> { 39, 50  }
                 }
             };
 
