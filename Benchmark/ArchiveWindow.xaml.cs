@@ -23,37 +23,16 @@ namespace Benchmark
     /// </summary>
     public partial class ArchiveWindow : Window
     {
-        private ZoomingOptions _zoomingMode;
         public ArchiveWindow()
         {
-
-
             InitializeComponent();
-
-            ZoomingMode = ZoomingOptions.X;
-            XFormatter = val => new DateTime((long)val).ToString("hh:mm:ss");
-            YFormatter = val => val.ToString("C");
-
-            DataContext = this;
+            DataContext = new ArchiveViewModel();
         }
-            public ZoomingOptions ZoomingMode
-            {
-                get { return _zoomingMode; }
-                set
-                {
-                    _zoomingMode = value;
-                    OnPropertyChanged();
-                }
-            }
 
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            protected virtual void OnPropertyChanged(string propertyName = null)
-            {
-                if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        public Func<double, string> XFormatter { get; set; }
-        public Func<double, string> YFormatter { get; set; }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
 

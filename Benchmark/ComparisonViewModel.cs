@@ -20,17 +20,32 @@ namespace Benchmark
         private string selectedDevice;
         private DateTime date = DateTime.Today;
         private SeriesCollection seriesCollection;
-        private string[] labels;
+        private List<string> labels;
         #endregion
 
         #region Properties
         public ICommand AddCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public SeriesCollection SeriesCollection { get { return seriesCollection; } set { seriesCollection = value; RaisePropertyChanged(); } }
-        public string[] Labels { get { return labels; } set { labels = value; RaisePropertyChanged(); } }
+        public List<string> Labels { get { return labels; } set { labels = value; RaisePropertyChanged(); } }
         public ObservableCollection<Device> Devices { get; set; } = new ObservableCollection<Device>();
         public string SelectedDevice { get { return selectedDevice; } set { selectedDevice = value; RaisePropertyChanged(); } }
-        public DateTime Date { get { return date; } set { date = value; RaisePropertyChanged(); } }
+        public DateTime Date { get { return date; } set { date = value; RaisePropertyChanged(); Reset(); } }
+
+        private void Reset()
+        {
+            SeriesCollection = new SeriesCollection()
+            {
+                new LineSeries
+                {
+                    Title = "Porównanie",
+                    Values = new ChartValues<ObservableValue>()
+                }
+            };
+            Labels.Clear();
+            SelectedDevices.Clear();
+        }
+
         Dictionary<string, double> SelectedDevices = new Dictionary<string, double>();
         #endregion
 
@@ -54,7 +69,7 @@ namespace Benchmark
             //serie danych
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
-                var data = dbContext.SpeedTestResultHeaders.Select(x=>x.DeviceName).Distinct().ToList();
+                var data = dbContext.SpeedTestResultHeaders.Select(x => x.DeviceName).Distinct().ToList();
                 foreach (var item in data)
                 {
                     Devices.Add(new Device { Name = item });
@@ -95,17 +110,17 @@ namespace Benchmark
                 string searchDate = Date.ToString("yyyyMMdd");
                 using (ApplicationDbContext dbContext = new ApplicationDbContext())
                 {
-                    data = dbContext.SpeedTestResultHeaders.Where(x => x.Date == searchDate && x.DeviceName == selectedDevice).ToList();
+                    data = dbContext.SpeedTestResultHeaders.Where(x => x.DateString == searchDate && x.DeviceName == selectedDevice).ToList();
                 }
-                if(data == null || data.Count == 0)
+                if (data == null || data.Count == 0)
                 {
                     MessageBox.Show("Brak zapisanych pomiarów.");
                 }
                 else
                 {
-                    SelectedDevices.Add(SelectedDevice, data.Average(x=>x.AvgSpeed));
+                    SelectedDevices.Add(SelectedDevice, data.Average(x => x.AvgSpeed));
                     SeriesCollection[0] = new ColumnSeries { Title = "Porównanie", Values = new ChartValues<double>(SelectedDevices.Select(x => x.Value)) };
-                    Labels = SelectedDevices.Select(x => x.Key).ToArray();
+                    Labels = SelectedDevices.Select(x => x.Key).ToList();
                 }
             }
             catch (Exception e)
@@ -122,7 +137,7 @@ namespace Benchmark
             {
                 SelectedDevices.Remove(SelectedDevice);
                 SeriesCollection[0] = new ColumnSeries { Title = "Porównanie", Values = new ChartValues<double>(SelectedDevices.Select(x => x.Value)) };
-                Labels = SelectedDevices.Select(x => x.Key).ToArray();
+                Labels = SelectedDevices.Select(x => x.Key).ToList();
             }
             catch (Exception e)
             {

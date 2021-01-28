@@ -14,13 +14,13 @@ namespace Benchmark
 
         private void OpenArchive(object sender, RoutedEventArgs e)
         {
-            ArchiveWindow archiveWindow = new ArchiveWindow();
+            ArchiveWindow archiveWindow = new ArchiveWindow { Owner = this };
             archiveWindow.ShowDialog();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ComparisonWindow comparisonWindow = new ComparisonWindow();
+            ComparisonWindow comparisonWindow = new ComparisonWindow { Owner = this };
             comparisonWindow.ShowDialog();
         }
     }
