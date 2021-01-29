@@ -31,6 +31,7 @@ namespace Benchmark
         private string selectedDevice;
         private bool isBusy;
         private TimeSpan timeSpan;
+        public ObservableCollection<Parameter> parameters;
         #endregion
 
         #region Properties
@@ -59,9 +60,38 @@ namespace Benchmark
         public string Avg { get { return avg; } set { avg = value; RaisePropertyChanged(); } }
         public string ActualSpeed { get { return actualSpeed; } set { actualSpeed = value; RaisePropertyChanged(); } }
         public ObservableCollection<Device> Devices { get; set; } = new ObservableCollection<Device>();
-        public string SelectedDevice { get { return selectedDevice; } set { selectedDevice = value; RaisePropertyChanged(); } }
+        public string SelectedDevice { get { return selectedDevice; } set { selectedDevice = value; RaisePropertyChanged(); ChangeSelectedDevice(); } }
+
+        private void ChangeSelectedDevice()
+        {
+            try
+            {
+                Device device = Devices.FirstOrDefault(x => x.DeviceId == SelectedDevice);
+                if (device == null)
+                {
+                    Parameters = new ObservableCollection<Parameter>();
+                    return;
+                }
+
+                Parameters = new ObservableCollection<Parameter>(device.LogicalDisks.Select(x => new Parameter
+                {
+                    FileSystem = x.FileSystem,
+                    DriveId = x.DriveId,
+                    FreeSpace = ((double)x.FreeSpace / 1024 / 1024 / 1024).ToString("n2") + " GB",
+                    TotalSpace = ((double)x.TotalSpace / 1024 / 1024 / 1024).ToString("n2") + " GB",
+                    BusySpace = ((double)(x.TotalSpace - (double)x.FreeSpace) / 1024 / 1024 / 1024).ToString("n2") + " GB"
+                }));
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         public string BtnText { get { return !IsBusy ? "Test" : "Zatrzymaj"; } }
         public string TimeSpan { get { return timeSpan == null ? "00:00" : timeSpan.Minutes.ToString().PadLeft(2, '0') + ":" + timeSpan.Seconds.ToString().PadLeft(2, '0'); } }
+
+        public ObservableCollection<Parameter> Parameters { get { return parameters; } set { parameters = value; RaisePropertyChanged(); } }
         #endregion
 
         #region Ctor
@@ -328,5 +358,14 @@ namespace Benchmark
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Arrow;
         }
         #endregion
+        public class Parameter
+        {
+            public string DriveId { get; set; }
+            public string FileSystem { get; set; }
+            public string FreeSpace { get; set; }
+            public string TotalSpace { get; set; }
+            public string BusySpace { get; set; }
+        }
     }
 }
+
