@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Benchmark" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="604.518" Width="726.807">
+        Title="MainWindow" Height="604.518"  Width="780" MinWidth="780">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
@@ -29,7 +29,17 @@
             <Button Content="Odśwież listę" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshCommand}" Margin="20,20,0,0"  Height="32"  VerticalAlignment="Top" Width="76" />
 
         </StackPanel>
-        <GroupBox Grid.Row="1" Grid.Column="0"  Header="Parametry" Height="208" Margin="20" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+        <GroupBox Grid.Row="1" Grid.Column="0"  Header="Parametry" Height="208" Margin="20" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <DataGrid ItemsSource="{Binding Parameters}" Background="Transparent"  AutoGenerateColumns="False" IsReadOnly="True"  CanUserAddRows="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding DriveId}" MaxWidth="200" Width="70" Header="Nazwa"/>
+                    <DataGridTextColumn Binding="{Binding FileSystem}" Header="System plików"/>
+                    <DataGridTextColumn Binding="{Binding TotalSpace}" Header="Pojemność"/>
+                    <DataGridTextColumn Binding="{Binding BusySpace}" Header="Zajęte miejsce"/>
+                    <DataGridTextColumn Binding="{Binding FreeSpace}" Header="Wolne miejsce" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
 
         <Grid  Grid.Row="0" Grid.RowSpan="5" Grid.Column="1">
             <Grid.RowDefinitions>
