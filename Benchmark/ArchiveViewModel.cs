@@ -61,7 +61,7 @@ namespace Benchmark
                     else
                     {
                         SeriesCollection[0] = new ColumnSeries { Title = selectedDevice, Values = new ChartValues<double>(data.OrderBy(x => x.Date).Select(x => x.AvgSpeed)) };
-                        Labels = data.OrderBy(x=>x.Date).Select(x => x.Date.ToString("hh:mm")).ToList();
+                        Labels = data.OrderBy(x=>x.Date).Select(x => x.Date.ToString("hh:mm:tt")).ToList();
                     }
                 }
             }
